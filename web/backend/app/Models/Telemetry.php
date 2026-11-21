@@ -12,11 +12,12 @@ class Telemetry extends Model
     protected $fillable = [
         'vehicle_id', 'latitude', 'longitude', 'speed', 'rpm',
         'temperature', 'humidity', 'battery', 'lock', 'arrived',
-        'gsm', 'wifi', 'recorded_at',
+        'in_zone', 'distance', 'gsm', 'wifi', 'recorded_at',
     ];
 
     protected $casts = [
         'arrived' => 'boolean',
+        'in_zone' => 'boolean',
         'recorded_at' => 'datetime',
     ];
 }

@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 use Illuminate\Foundation\Events\Dispatchable;
@@ -13,21 +14,19 @@ class TelemetryUpdated implements ShouldBroadcastNow
 
     public $data;
 
-    /**
-     * Create a new event instance.
-     */
     public function __construct($data)
     {
         $this->data = $data;
     }
 
-    /**
-     * Get the channels the event should broadcast on.
-     *
-     * @return array<int, string>
-     */
+    /** Channel publik "telemetry"; frontend: echo.channel('telemetry').listen('.telemetry.updated') */
     public function broadcastOn(): array
     {
-        return [];
+        return [new Channel('telemetry')];
+    }
+
+    public function broadcastAs(): string
+    {
+        return 'telemetry.updated';
     }
 }

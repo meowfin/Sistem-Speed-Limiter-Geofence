@@ -2,17 +2,21 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Database\Seeder;
 use App\Models\Geofence;
+use Illuminate\Database\Seeder;
 
 class GeofenceSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
+    /** Koordinat dan radius sama dengan konstanta di firmware/main.cpp */
     public function run(): void
     {
-        //
+        Geofence::updateOrCreate(
+            ['name' => 'Zona Lambat (Zona Sekolah)'],
+            ['center_lat' => -7.425000, 'center_lng' => 109.229000, 'radius_meters' => 10],
+        );
+        Geofence::updateOrCreate(
+            ['name' => 'Tujuan (Zona Unlock)'],
+            ['center_lat' => -7.424883, 'center_lng' => 109.229367, 'radius_meters' => 20],
+        );
     }
 }

@@ -15,11 +15,16 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        // Membuat akun pengujian jika belum tersedia
+        User::firstOrCreate(
+            ['email' => 'test@example.com'],
+            ['name' => 'Test User']
+        );
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+        // Menjalankan seeder geofence dan telemetry
+        $this->call([
+            GeofenceSeeder::class,
+            TelemetrySeeder::class,
         ]);
     }
 }

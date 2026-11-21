@@ -20,6 +20,8 @@ return new class extends Migration
             $table->double('battery')->nullable();
             $table->enum('lock', ['LOCKED', 'UNLOCKED'])->nullable();
             $table->boolean('arrived')->default(false);
+            $table->boolean('in_zone')->default(false);
+            $table->double('distance')->nullable();
             $table->string('gsm')->nullable();
             $table->string('wifi')->nullable();
             $table->timestamp('recorded_at')->useCurrent();

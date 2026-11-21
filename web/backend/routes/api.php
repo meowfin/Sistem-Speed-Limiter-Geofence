@@ -1,14 +1,13 @@
 <?php
 
+use App\Http\Controllers\Api\CommandController;
+use App\Http\Controllers\Api\GsmController;
+use App\Http\Controllers\Api\TelemetryController;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-*/
-
-Route::get('/telemetries', [\App\Http\Controllers\Api\TelemetryController::class, 'index']);
-Route::post('/command/lock', [\App\Http\Controllers\Api\CommandController::class, 'lock']);
-Route::post('/command/unlock', [\App\Http\Controllers\Api\CommandController::class, 'unlock']);
-Route::post('/gsm', [\App\Http\Controllers\Api\GsmController::class, 'receive']);
+Route::get('/telemetries', [TelemetryController::class, 'index']);
+Route::get('/geofences', [TelemetryController::class, 'geofences']);
+Route::get('/activities', [TelemetryController::class, 'activities']);
+Route::post('/command/lock', [CommandController::class, 'lock']);
+Route::post('/command/unlock', [CommandController::class, 'unlock']);
+Route::post('/gsm', [GsmController::class, 'receive']);
