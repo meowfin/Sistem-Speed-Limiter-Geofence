@@ -168,28 +168,20 @@ class MqttService
         // 1 & 2. EVALUASI ZONA & KIRIM PERINTAH HANYA JIKA GPS SUDAH LOCK SATELIT
         if ($hasValidGps) {
             $geo = $this->geofenceService->evaluatePosition($lat, $lng);
-            $inZone   = $geo['in_zone'];
-            $arrived  = $geo['arrived'];
+            $inZone   = array_key_exists('in_zone', $d) ? (bool) $d['in_zone'] : $geo['in_zone'];
+            $arrived  = array_key_exists('arrived', $d) ? (bool) $d['arrived'] : $geo['arrived'];
             $distance = $d['dist'] ?? $geo['distance'];
 
-            if ($arrived) {
-                $this->publishCommand('SET_SPEED:180');
-                if (! $prev || ! $prev->arrived) {
-                    $this->publishCommand('UNLOCK');
-                }
-            } elseif ($inZone) {
-                $this->publishCommand('SET_SPEED:120');
-                if ($prev && $prev->arrived) {
-                    $this->publishCommand('LOCK');
-                }
-            } else {
-                $this->publishCommand('SET_SPEED:180');
-                if ($prev && $prev->arrived) {
-                    $this->publishCommand('LOCK');
-                }
+            // Hanya kirim UNLOCK sekali saat baru tiba di tujuan
+            if ($arrived && (! $prev || ! $prev->arrived)) {
+                $this->publishCommand('UNLOCK');
+            }
+            // Hanya kirim LOCK sekali saat meninggalkan area tujuan
+            elseif (! $arrived && ($prev && $prev->arrived)) {
+                $this->publishCommand('LOCK');
             }
         }
-
+        
         // 3. HITUNG KECEPATAN LINEAR DARI RPM (RODA DIAMETER 6.5 CM)
         $rpm = isset($d['rpm']) ? (float) $d['rpm'] : 0.0;
         $wheelCircumference = M_PI * self::WHEEL_DIAMETER_M;

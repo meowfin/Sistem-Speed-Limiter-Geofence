@@ -59,26 +59,30 @@ export default function DashboardPage({ t, cmd }) {
           value={calcSpeedKmh(L)}
           unit="km/j"
           tone="ok"
-          hint={L?.setpoint_rpm ? `Target: ${(((L.setpoint_rpm * Math.PI * 0.065) / 60) * 3.6).toFixed(2)} km/j` : 'Roda 6.5 cm'}
         />
         <StatusCard
           title="Kecepatan (m/s)"
           value={calcSpeedMps(L)}
           unit="m/s"
           tone="ok"
-          hint={L?.setpoint_rpm ? `Target: ${((L.setpoint_rpm * Math.PI * 0.065) / 60).toFixed(2)} m/s` : 'Roda 6.5 cm'}
         />
         <StatusCard
           title="Zona"
-          value={L ? (L.in_zone ? 'Zona lambat' : 'Zona bebas') : null}
-          tone={L?.in_zone ? 'warn' : 'ok'}
-          hint={L?.in_zone ? 'Setpoint 90 RPM (1.10 km/j)' : 'Setpoint 145 RPM (1.78 km/j)'}
+          value={
+            L
+              ? L.in_zone
+                ? 'Zona sekolah'
+                : L.in_toll
+                  ? 'Zona tol'
+                  : 'Zona bebas'
+              : null
+          }
+          tone={L?.in_zone ? 'warn' : L?.in_toll ? 'bad' : 'ok'}
         />
         <StatusCard
           title="Tujuan"
           value={L ? (L.arrived ? 'Sudah tiba' : 'Dalam perjalanan') : null}
           tone={L?.arrived ? 'ok' : 'neutral'}
-          hint={dist ? `Jarak ${dist} m` : 'Jarak belum tersedia'}
         />
         <StatusCard title="Suhu" value={num(L?.temperature)} unit="°C" />
         <StatusCard title="Kelembapan" value={num(L?.humidity)} unit="%" />
