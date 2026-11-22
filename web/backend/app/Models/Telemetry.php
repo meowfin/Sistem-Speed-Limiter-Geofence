@@ -10,9 +10,28 @@ class Telemetry extends Model
     use HasFactory;
 
     protected $fillable = [
-        'vehicle_id', 'latitude', 'longitude', 'speed', 'rpm',
-        'temperature', 'humidity', 'battery', 'lock', 'arrived',
-        'in_zone', 'distance', 'gsm', 'wifi', 'recorded_at',
+        'vehicle_id',
+        'trip_session',
+        'latitude',
+        'longitude',
+        'speed',
+        'speed_mps',
+        'speed_kmh',
+        'rpm',
+        'setpoint_rpm',
+        'pid_error',
+        'pwm_out',
+        'pid_mode',
+        'temperature',
+        'humidity',
+        'battery',
+        'lock',
+        'arrived',
+        'in_zone',
+        'distance',
+        'gsm',
+        'wifi',
+        'recorded_at',
     ];
 
     protected $casts = [

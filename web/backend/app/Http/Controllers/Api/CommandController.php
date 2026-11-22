@@ -7,6 +7,7 @@ use App\Models\ActivityLog;
 use App\Services\MqttService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Http\Request;
 
 class CommandController extends Controller
 {
@@ -32,10 +33,57 @@ class CommandController extends Controller
 
         ActivityLog::create([
             'vehicle_id' => config('mqtt.vehicle_id'),
-            'action' => 'COMMAND_'.$command,
+            'action' => 'COMMAND_' . $command,
             'message' => "Perintah {$command} dikirim dari dashboard",
         ]);
 
         return response()->json(['status' => 'sent', 'command' => $command]);
+    }
+
+    public function reset(MqttService $mqtt)
+    {
+        $newSession = $mqtt->resetTripSession();
+        event(new \App\Events\TripReset($newSession));
+
+        return response()->json([
+            'status'      => 'ok',
+            'message'     => 'Perjalanan berhasil di-reset dan kontainer dikunci kembali.',
+            'new_session' => $newSession,
+        ]);
+    }
+
+    public function setPid(Request $request, MqttService $mqtt)
+    {
+        $data = $request->validate([
+            'kp'           => 'required|numeric|min:0|max:50',
+            'ki'           => 'required|numeric|min:0|max:50',
+            'kd'           => 'required|numeric|min:0|max:50',
+            'setpoint_rpm' => 'nullable|numeric|min:0|max:250',
+        ]);
+
+        $mqtt->publishPidConfig((float) $data['kp'], (float) $data['ki'], (float) $data['kd']);
+
+        if (isset($data['setpoint_rpm'])) {
+            $mqtt->publishSetpointRpm((float) $data['setpoint_rpm']);
+        }
+
+        return response()->json([
+            'status'  => 'ok',
+            'message' => 'Parameter PID berhasil dikirim ke ESP32',
+        ]);
+    }
+
+    public function setPidMode(Request $request, MqttService $mqtt)
+    {
+        $data = $request->validate([
+            'mode' => 'required|in:AUTO,MANUAL,auto,manual',
+        ]);
+
+        $mqtt->publishPidMode($data['mode']);
+
+        return response()->json([
+            'status'  => 'ok',
+            'message' => 'Mode kendali diubah ke ' . strtoupper($data['mode']),
+        ]);
     }
 }
