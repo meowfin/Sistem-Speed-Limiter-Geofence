@@ -1,1 +1,93 @@
 @import "tailwindcss";
+
+@layer base {
+  html {
+    color-scheme: dark;
+  }
+
+  body {
+    background-color: #050b18; /* Latar belakang utama biru sangat gelap */
+    color: #e2e8f0;            /* Teks utama putih keabuan lembut */
+  }
+}
+
+/* Otomatis ubah seluruh kartu putih bawaan menjadi Dark Navy Blue */
+.bg-white {
+  background-color: #0b1426 !important;
+}
+
+.bg-slate-50 {
+  background-color: #0f1c36 !important;
+}
+
+.bg-slate-100 {
+  background-color: #162544 !important;
+}
+
+.border-slate-200,
+.border-slate-100 {
+  border-color: #1e325c !important;
+}
+
+.border-slate-300 {
+  border-color: #28427a !important;
+}
+
+/* Penyesuaian warna teks agar kontras di atas biru gelap */
+.text-slate-900,
+.text-slate-800 {
+  color: #f1f5f9 !important;
+}
+
+.text-slate-700 {
+  color: #cbd5e1 !important;
+}
+
+.text-slate-600 {
+  color: #94a3b8 !important;
+}
+
+.text-slate-500 {
+  color: #64748b !important;
+}
+
+/* Input form & dropdown agar menyatu dengan tema biru gelap */
+input,
+select {
+  background-color: #070e1d !important;
+  color: #f8fafc !important;
+  border-color: #253e73 !important;
+}
+
+input:focus,
+select:focus {
+  border-color: #38bdf8 !important;
+  outline: none;
+}
+
+/* Hover baris tabel riwayat */
+tr.hover\:bg-slate-50:hover {
+  background-color: #132240 !important;
+}
+
+/* Penyesuaian grid grafik Recharts agar garis putus-putus tidak terlalu mencolok */
+.recharts-cartesian-grid line {
+  stroke: #1e325c !important;
+}
+
+.recharts-text {
+  fill: #94a3b8 !important;
+}
+
+.recharts-default-tooltip {
+  background-color: #070e1d !important;
+  border-color: #2563eb !important;
+  color: #f8fafc !important;
+}
+
+/* Pertahankan latar putih bersih khusus untuk QR Code agar selalu terbaca kamera */
+.qr-box {
+  background-color: #ffffff !important;
+  padding: 6px !important;
+  border-radius: 0.5rem;
+}

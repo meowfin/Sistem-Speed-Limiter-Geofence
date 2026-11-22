@@ -18,7 +18,7 @@ export default function SpeedGauge({ rpm = 0, target = 0, max = 300 }) {
         <path d={`M 20 100 A 80 80 0 0 1 ${x} ${y}`} fill="none" stroke={over ? '#dc2626' : '#2563eb'} strokeWidth="14" strokeLinecap="round" />
         <line x1={tx1} y1={ty1} x2={tx2} y2={ty2} stroke="#ea580c" strokeWidth="3" />
         <text x="100" y="88" textAnchor="middle" fontSize="28" fontWeight="700" fill="currentColor">{Math.round(rpm)}</text>
-        <text x="100" y="106" textAnchor="middle" fontSize="10" fill="#64748b">RPM · target {target}</text>
+        <text x="100" y="106" textAnchor="middle" fontSize="10" fill="#64748b">RPM</text>
       </svg>
     </div>
   );

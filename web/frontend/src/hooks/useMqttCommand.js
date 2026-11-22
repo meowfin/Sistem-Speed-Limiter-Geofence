@@ -1,24 +1,26 @@
 import { useState } from 'react';
 import api from '../services/api';
 
-// Kirim LOCK / UNLOCK: dashboard → POST /api/command/* → Laravel → MQTT → ESP32
 export default function useMqttCommand(onDone) {
-  const [sending, setSending] = useState(false);
-  const [message, setMessage] = useState(null);
+  const [busy, setBusy] = useState(false);
 
-  const send = async (cmd) => {
-    setSending(true);
-    setMessage(null);
+  const run = async (fn, successCb) => {
+    setBusy(true);
     try {
-      await (cmd === 'LOCK' ? api.lock() : api.unlock());
-      setMessage({ ok: true, text: `Perintah ${cmd} terkirim ke perangkat.` });
-      onDone?.();
-    } catch (e) {
-      setMessage({ ok: false, text: e.response?.data?.message || 'Gagal mengirim perintah.' });
+      const res = await fn();
+      if (successCb) successCb(res.data);
+      if (onDone) onDone();
     } finally {
-      setSending(false);
+      setBusy(false);
     }
   };
 
-  return { send, sending, message };
+  return {
+    busy,
+    lock: () => run(api.lock),
+    unlock: () => run(api.unlock),
+    resetTrip: (onResetSuccess) => run(api.resetTrip, onResetSuccess),
+    setPidConfig: (cfg) => run(() => api.setPidConfig(cfg)),
+    setPidMode: (mode) => run(() => api.setPidMode(mode)),
+  };
 }

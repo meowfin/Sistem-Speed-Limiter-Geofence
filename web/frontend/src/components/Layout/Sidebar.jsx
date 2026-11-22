@@ -1,6 +1,6 @@
 const LINKS = [
   ['#ringkasan', 'Ringkasan'],
-  ['#peta', 'Peta geofence'],
+  ['#peta', 'Peta Geofence'],
   ['#grafik', 'Grafik'],
   ['#aktivitas', 'Riwayat aktivitas'],
 ];
