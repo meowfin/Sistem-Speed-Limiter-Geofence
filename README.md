@@ -1,4 +1,4 @@
-# Sistem-Speed-Limiter-Geofence
+# 🚚 Smart Logistics Tracker and Speed Limiter
 ```
 Anggota Kelompok:
 1. IBNU ABBAS (H1H024038)
@@ -7,8 +7,6 @@ Anggota Kelompok:
 4. RAMANDHANU ISNAERA AHNAF WIBAWA (H1H024061)
 ```
 
-# 🚚 Smart Logistics Tracker berbasis IoT
-
 ![Platform](https://img.shields.io/badge/Hardware-ESP32_DevKit_V1-blue?style=flat-square&logo=espressif)
 ![Firmware](https://img.shields.io/badge/Firmware-Arduino_C++-00979D?style=flat-square&logo=arduino)
 ![Backend](https://img.shields.io/badge/Backend-Laravel_&_Reverb-FF2D20?style=flat-square&logo=laravel)
@@ -16,10 +14,6 @@ Anggota Kelompok:
 ![Protocol](https://img.shields.io/badge/Protocol-MQTT_&_WebSocket-660066?style=flat-square&logo=eclipse-mosquitto)
 
 Prototipe sistem pemantauan logistik rantai dingin (*cold-chain*), pembatas kecepatan kendaraan otomatis berbasis *geofencing*, kendali putaran motor *closed-loop* PID, penguncian boks kargo otomatis, serta verifikasi paket QR Code berbasis *Internet of Things* (IoT).
-
-> **Mata Kuliah:** Praktikum Sistem Internet of Things (TK245005)  
-> **Institusi:** Program Studi Teknik Komputer — Universitas Jenderal Soedirman  
-> **Penyusun:** `<Nama Lengkap>` — `<NIM>`
 
 ---
 
